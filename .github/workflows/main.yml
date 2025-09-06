@@ -1,0 +1,28 @@
+name: Python Syntax Check
+
+on:
+  push:
+    paths:
+      - '**.py'
+  pull_request:
+    paths:
+      - '**.py'
+
+jobs:
+  syntax-check:
+    name: Check Python Syntax
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.15'  # or any version you use
+
+      - name: Check Python syntax
+        run: |
+          echo "Checking syntax for all Python files..."
+          find . -name "*.py" -print0 | xargs -0 -n1 python -m py_compile
